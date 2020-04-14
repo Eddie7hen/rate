@@ -9,7 +9,8 @@ function onChange(v) {
 }
 
 ReactDOM.render(
-  <div style={{ margin: 100 }}>
+  <div style={{ margin: 50 }}>
+    <h2>Base</h2>
     <Rate
       defaultValue={2.5}
       onChange={onChange}
@@ -40,5 +41,16 @@ ReactDOM.render(
       style={{ fontSize: 50, marginTop: 24 }}
       character={<i className="anticon anticon-star" />}
     />
-  </div>
-, document.getElementById('__react-content'));
+    <br />
+    <h2>RTL</h2>
+    <Rate
+      defaultValue={2.5}
+      onChange={onChange}
+      direction="rtl"
+      style={{ fontSize: 50, marginTop: 24 }}
+      allowHalf
+      character={<i className="anticon anticon-star" />}
+    />
+  </div>,
+  document.getElementById('__react-content'),
+);

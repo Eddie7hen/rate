@@ -29,6 +29,7 @@ class Rate extends React.Component {
     onBlur: PropTypes.func,
     onKeyDown: PropTypes.func,
     autoFocus: PropTypes.bool,
+    direction: PropTypes.string,
   };
 
   static defaultProps = {
@@ -42,6 +43,7 @@ class Rate extends React.Component {
     character: '★',
     onHoverChange: noop,
     tabIndex: 0,
+    direction: 'ltr',
   };
 
   constructor(props) {
@@ -165,13 +167,16 @@ class Rate extends React.Component {
   }
 
   getStarValue(index, x) {
-    const { allowHalf } = this.props;
+    const { allowHalf, direction } = this.props;
+    const reverse = direction === 'rtl';
     let value = index + 1;
     if (allowHalf) {
       const starEle = this.getStarDOM(index);
       const leftDis = getOffsetLeft(starEle);
       const width = starEle.clientWidth;
-      if (x - leftDis < width / 2) {
+      if (reverse && x - leftDis > width / 2) {
+        value -= 0.5;
+      } else if (!reverse && x - leftDis < width / 2) {
         value -= 0.5;
       }
     }
@@ -221,6 +226,7 @@ class Rate extends React.Component {
       character,
       characterRender,
       tabIndex,
+      direction,
     } = this.props;
     const { value, hoverValue, focused } = this.state;
     const stars = [];
@@ -244,9 +250,12 @@ class Rate extends React.Component {
         />,
       );
     }
+    const rateClassName = classNames(prefixCls, disabledClass, className, {
+      [`${prefixCls}-rtl`]: direction === 'rtl',
+    });
     return (
       <ul
-        className={classNames(prefixCls, disabledClass, className)}
+        className={rateClassName}
         style={style}
         onMouseLeave={disabled ? null : this.onMouseLeave}
         tabIndex={disabled ? -1 : tabIndex}
