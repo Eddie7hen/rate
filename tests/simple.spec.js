@@ -298,4 +298,15 @@ describe('rate', () => {
       expect(handleFocus).toBeCalled();
     });
   });
+
+  describe('class', () => {
+    it('rtl', () => {
+      const wrapper = mount(<Rate count={3} value={1} direction="rtl" />);
+      expect(wrapper.find('.rc-rate-rtl').length).toBe(1);
+    });
+    it('disabled', () => {
+      const wrapper = mount(<Rate count={3} value={1} disabled />);
+      expect(wrapper.find('.rc-rate-disabled').length).toBe(1);
+    });
+  });
 });
