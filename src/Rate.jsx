@@ -128,19 +128,28 @@ class Rate extends React.Component {
 
   onKeyDown = event => {
     const { keyCode } = event;
-    const { count, allowHalf, onKeyDown } = this.props;
+    const { count, allowHalf, onKeyDown, direction } = this.props;
+    const reverse = direction === 'rtl';
     let { value } = this.state;
     if (keyCode === KeyCode.RIGHT && value < count) {
-      if (allowHalf) {
+      if (allowHalf && reverse) {
+        value -= 0.5;
+      } else if (allowHalf && !reverse) {
         value += 0.5;
+      } else if (!allowHalf && reverse) {
+        value -= 1;
       } else {
         value += 1;
       }
       this.changeValue(value);
       event.preventDefault();
     } else if (keyCode === KeyCode.LEFT && value > 0) {
-      if (allowHalf) {
+      if (allowHalf && reverse) {
+        value += 0.5;
+      } else if (allowHalf && !reverse) {
         value -= 0.5;
+      } else if (!allowHalf && reverse) {
+        value += 1;
       } else {
         value -= 1;
       }
