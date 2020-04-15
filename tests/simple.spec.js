@@ -383,4 +383,13 @@ describe('rate', () => {
       expect(wrapper.find('.rc-rate-disabled').length).toBe(1);
     });
   });
+
+  describe('events', () => {
+    it('onKeyDown', () => {
+      const onKeyDown = jest.fn();
+      const wrapper = mount(<Rate onKeyDown={onKeyDown} />);
+      wrapper.simulate('keydown');
+      expect(onKeyDown).toHaveBeenCalled();
+    });
+  });
 });
